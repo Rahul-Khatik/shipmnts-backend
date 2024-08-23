@@ -8,6 +8,8 @@ const cors = require("cors");
 const session = require("express-session");
 const multer = require("multer");
 const fs = require("fs");
+const authorRoutes = require("./routes/author");
+const bookRoutes = require("./routes/book");
 const app = express();
 
 app.use(
@@ -35,7 +37,7 @@ app.use(
 mongoose.set("runValidators", true);
 
 mongoose
-    .connect("mongodb://localhost:27017", {
+    .connect("mongodb+srv://rahulkhatik9574:rahul93281@cluster0.u15ha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
@@ -43,6 +45,8 @@ mongoose
     .catch((err) => console.log("Can't connect", err));
 
 // Routes
+app.use("/api", authorRoutes);
+app.use("/api", bookRoutes);
 
 //  PORT
 const port = process.env.PORT || 1234;

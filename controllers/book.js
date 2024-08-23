@@ -1,34 +1,33 @@
 const mongoose = require("mongoose");
-const Author = require("../models/author");
 const responseManager = require("../utilities/responseManager");
+const Book = require("../models/book");
 
-exports.addAuthors = async (req, res) => {
+exports.addBooks = async (req, res) => {
     const {
+        authorid,
         name,
-        email,
-        dob,
+        isbn_code,
     } = req.body;
 
     const obj = {
+        authorid: authorid ? authorid : "",
         name: name ? name : "",
-        email: email ? email : "",
-        dob: dob ? dob : "",
+        isbn_code: isbn_code ? isbn_code : "",
     };
-    const authorData = await Author.create(obj);
+    const bookData = await Book.create(obj);
 
-    return responseManager.onSuccess("Authoe added", authorData, res);
+    return responseManager.onSuccess("Book added", bookData, res);
 };
 
-exports.listAuthors = async (req, res) => {
-
-    return Author.find()
+exports.listBooks = async (req, res) => {
+    return Book.find()
         .sort({ _id: -1 })
         .select("-createdAt -updatedAt -__v")
         .lean()
-        .then((authorList) => {
+        .then((bookList) => {
             return responseManager.onSuccess(
-                "Author list",
-                authorList,
+                "Book list",
+                bookList,
                 res
             );
         })

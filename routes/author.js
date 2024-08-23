@@ -1,4 +1,5 @@
 const express = require("express");
+const { listAuthors, addAuthors } = require("../controllers/author");
 const router = express.Router();
 
 router.get("/authors", listAuthors);
